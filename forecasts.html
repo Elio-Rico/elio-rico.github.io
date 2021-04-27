@@ -52,22 +52,95 @@
 									<!--<span class="date">April 25, 2017</span>-->
 									<h2><a href="forecasts.html">Forecasting Swiss Exports</a></h2>
 									<p>Using up-todate Time Series modelling, we forecast exports for an important Swiss industry. The project 
-										included a presentation of the results, frequent quarterly forecasting and assessment of the model.
+										included a presentation of the results, frequent quarterly forecasting and constant assessment of the model.
 										</p>
 								</header>
 								<!-- <a href="#" class="image main"><img src="images/exports_508_310.jpg" alt="" /></a>-->
 								
 							
 								<h2>Framework</h2>
-								<p> Below, we display a plot of the raw time series. It shows the total exports of a certain industry towards all countries 
-								in million CHF.</p>
+								<p> 
+									In the exercise, I was provided with monthly export data of a Swiss industry. The aim was to forecast exports
+									for several different regions, including Europe, the United States as well as total exports. In this
+									short project description, I will focus on the procedure to forecast total exports of the Swiss industry.
+								</p>
+									
+								<p>	
+									Below, the figure shows the original series of total exports of this Swiss industry. The series shows strong seasonality and 
+									a positive trend over time. The series starts in 1993 and total exports peak in october 2014 at 2.28 billion CHF. 
+								</p>
 							
-								<!--<span class="image fit"><img src="images/rawExports_508_310.png" alt="" /></span>
-								-->
+								<!-- First figure - total exports:-->
+								<iframe src="forecasts_figures/totalExports_fig1.html" style="height:600px;width:930px;" title="Iframe Example"></iframe>
 
-								<iframe src="exports_test.html" style="height:600px;width:930px;" title="Iframe Example"></iframe>
 
-							
+								<h2>Preliminaries</h2>
+
+								<p> 
+									
+									To match the frequency of additional variables used in further analysis, I averaged the monthly time series to quarterly data.
+									As the forecast-horizon of interest was 1.5 years, I proceeded to detrend the time series
+									to focus more on the medium-term evolution of the exports. The de-trending of the time series allows
+									to purge the series of seasonality and abstract from short-term shocks that have no persisting effect. 
+								</p>
+
+								<p> 
+									To detrend, I used a seasonal-trend decomposition procedure based on LOESS. 
+									In a nutshell, this approach uses locally-weighted regressions as a smoother on the time series
+									(Cleveland et al., 1990). It allows to decompose a time series in trend component, seaonsal compent and 
+									a remainder. Below, I plot the filtered trend data in quarterly frequency together with the 
+									original monthly time series.
+									
+								</p>
+
+
+								<!-- First figure - total exports:-->
+								<iframe src="forecasts_figures/totalExports_fig2.html" style="height:600px;width:930px;" title="Iframe Example"></iframe>
+
+
+								<p> 
+									Before the model evaulation exercise, I selected several variables that correlate well
+									with the export time series. As we are only interested in an accurate forecast and not the causal
+									relationship between variables, including variables that correlate well with the variable of 
+									interest in the forecasting model can improve the model fit. However, correlation should be 
+									strong as including arbitrary series may increase noise and decrease the model's performance.
+
+								</p>
+
+								<p>
+								Displayed below are the growth rates of some variables that I considered in the forecasting
+								exercise. It shows the growth rates of our series of interset, the total exports of the Swiss industry,
+								the total exports of all sectors in Switzerland, and the real GDP growth of the region of interest 
+								(in this case, the GDP growth of the world).
+								</p>
+
+								<!-- First figure - total exports:-->
+								<iframe src="forecasts_figures/totalExports_fig3.html" style="height:600px;width:930px;" title="Iframe Example"></iframe>
+
+
+								<h2>Evaluation</h2>
+
+								<p>
+								Next, I present several models that I considered during the evaluation process. 
+								I show how I evaluated which models were most suitable and how I compared the 
+								forecasting accuracy across models.
+								</p>
+
+								<p>
+									I considered the following models: Auto-Regressive Moving-Average (ARMA), 
+									ARMA with exogenous inputs (ARMAX), Vector Auto-Regressive (VAR), VAR with exogenous
+									inputs (VARX), VAR with Moving-Average (VARMA). Note that this list
+									is in no means exhaustive regarding models suitable for forecasting exercises. However,
+									they have proven to fit considerably well in a first evaluation for our specific 
+									time series of interest.
+
+								</p>
+
+
+
+
+								<h2>References</h2>
+								R. B. Cleveland, W. S. Cleveland, J.E. McRae, and I. Terpenning (1990) STL: A Seasonal-Trend Decomposition Procedure Based on Loess. <i>Journal of Official Statistics</i>, 6, 3–73.
 
 								
 														
