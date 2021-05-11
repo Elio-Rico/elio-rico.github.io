@@ -20,6 +20,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+		<script type="text/x-mathjax-config;executed=true"></script>
 	</head>
 	<body class="is-preload">
 
@@ -103,7 +106,9 @@
 									with the export time series. As we are only interested in an accurate forecast and not the causal
 									relationship between variables, including variables that correlate well with the variable of 
 									interest in the forecasting model can improve the model fit. However, correlation should be 
-									strong as including arbitrary series may increase noise and decrease the model's performance.
+									strong as including arbitrary series may increase noise and decrease the model's performance. Also,
+									including too many variables may increase the in-sample fit but may lead to poor out-of-sample fit. 
+									If the model is overfit, it represents data patterns that are specific to the sample used.
 
 								</p>
 
@@ -136,9 +141,16 @@
 
 								</p>
 
+								<h3>ARMA</h3>
+								As a first model, I considered a simple ARMA representation. The model can be represented as follows.
 
+								$$y_t = c + \phi_1 y_{t-1} + \dots + \phi_p y_{t-p} + \varepsilon_t + \theta_1 \varepsilon_{t-1} + \dots + \theta_q \varepsilon_{t-q}$$
 
+								\(y_t\) is the series of interest, \(p,q\) are the number of lags considered. \(\phi\) represent the estimated coefficients
+								for the auto-regressive (AR) part, \(\theta\) are the coefficients of the moving average (MA) and \( \{ \varepsilon_t\}_{t\in ] -\infty,+\infty [} \) is 
+								a white noise process.
 
+								
 								<h2>References</h2>
 								R. B. Cleveland, W. S. Cleveland, J.E. McRae, and I. Terpenning (1990) STL: A Seasonal-Trend Decomposition Procedure Based on Loess. <i>Journal of Official Statistics</i>, 6, 3–73.
 
