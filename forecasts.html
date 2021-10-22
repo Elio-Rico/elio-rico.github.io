@@ -136,21 +136,64 @@
 									ARMA with exogenous inputs (ARMAX), Vector Auto-Regressive (VAR), VAR with exogenous
 									inputs (VARX), VAR with Moving-Average (VARMA). Note that this list
 									is in no means exhaustive regarding models suitable for forecasting exercises. However,
-									they have proven to fit considerably well in a first evaluation for our specific 
-									time series of interest.
-
+									they have proven to fit considerably well in a first evaluation for the specific 
+									time series of interest. In what follows, I briefly describe the models. 
 								</p>
 
 								<h3>ARMA</h3>
-								As a first model, I considered a simple ARMA representation. The model can be represented as follows.
+								As a first model, I considered a simple ARMA(p) representation. The model can be represented as follows.
 
 								$$y_t = c + \phi_1 y_{t-1} + \dots + \phi_p y_{t-p} + \varepsilon_t + \theta_1 \varepsilon_{t-1} + \dots + \theta_q \varepsilon_{t-q}$$
 
 								\(y_t\) is the series of interest, \(p,q\) are the number of lags considered. \(\phi\) represent the estimated coefficients
 								for the auto-regressive (AR) part, \(\theta\) are the coefficients of the moving average (MA) and \( \{ \varepsilon_t\}_{t\in ] -\infty,+\infty [} \) is 
-								a white noise process.
+								a white noise process. \(c\) is a constant.
 
-								
+								<h3>ARMAX</h3>
+								The ARMAX(p,q) is a simple extension of the ARMA model in that sense that it allows for additional regressors
+								to be considered in the model estimation. Formally, it is written as
+
+								$$y_t = c + \phi_1 y_{t-1} + \dots + \phi_p y_{t-p} + \beta_0 x_t + \dots \beta_r x_{t-r} + \dots \varepsilon_t + \theta_1 \varepsilon_{t-1} + \dots + \theta_q \varepsilon_{t-q}$$
+
+								where \(\beta_0 x_t + \dots \beta_r x_{t-r}\) is a matrix containing all additional variables considered (GDP growth and growth of total exports, as an example) and 
+								potential lags of these variables.
+
+								<h3>VAR</h3>
+								The VAR(p) is the multi-dimensional analogue to the the AR model. While in the AR model, only one equation
+								is considered at the time, the VAR estimates multiple equations simultaneously. Formally, we can represent a VAR 
+								in the following way
+
+								$$y_t = c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + \varepsilon_t$$
+
+								where \(y_i\) is a vector of length $k$ and the matrices \(\Phi\) are of dimension \(k \times k\). For example, \(y_t\) would contain
+								observations for our main variable of interest, the exports of a Swiss industry, and GDP growth (and hence \(k = 2\)). 
+								Each variable consists of observations from time \(t = 1 \dots T\). \(c\) and \(\varepsilon_t\) are vecotrs of length \(k\).
+
+								<h3>VARX</h3>
+								VARX(p) extend the VAR by allowing for additional exogenous regressors in the system of equations that are not dynamically dependent of each other. Formally, this is
+
+								$$y_t = c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + B x_{t} \varepsilon_t$$
+								with \(x_{t}\) being a vector of the exogenous variables.
+
+								<h3>VARMA</h3>
+								Finally, the VARMA(p,q) model is the multi-dimneinsional analogue to the ARMA model. Formally, this this can be described as 
+								$$y_t = c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} +  \varepsilon_t + \Theta  \varepsilon_t + \Theta_1 \varepsilon_{t-1} + \dots + \Theta_q \varepsilon_{t-q}$$
+
+
+								<h3>Selection of the model - in-sample forecasts</h3>
+
+								<p>
+								For each of the model, I did several forecasting exercises. In particular, I calculated the in-sample forecasts for all of the models
+								and compared the outcome with the actual variable. For in-sample forecasting, I restricted the time series to an arbitrary 
+								time \(t\) where \(1 < t < T \) and then estimated the model with different specifications. As I observe the actual outcome of the 
+								time series of interest for all periods \(\geq t \) until \( T \) I could compare the forecast with the actual outcome. I did the in-sample 
+								forecasting exercise for various combinations of exogenous variables and different lag-selection for both endogenous and exogenous variables.
+								</p>
+
+								<p>
+								As an example, below I compare the in-sample forecast of VARMA model to an ARAMX.
+								</p>
+
 								<h2>References</h2>
 								R. B. Cleveland, W. S. Cleveland, J.E. McRae, and I. Terpenning (1990) STL: A Seasonal-Trend Decomposition Procedure Based on Loess. <i>Journal of Official Statistics</i>, 6, 3–73.
 
